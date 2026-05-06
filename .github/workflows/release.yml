@@ -9,15 +9,15 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    if: github.head_ref == 'master'
+    if: github.head_ref == 'develop'
     permissions:
       contents: write
 
     steps:
-      - name: Checkout master branch
+      - name: Checkout develop branch
         uses: actions/checkout@v4
         with:
-          ref: master
+          ref: develop
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -57,7 +57,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Build: master -> release [$(date +'%Y-%m-%d %H:%M:%S')]"
+            git commit -m "Build: develop -> release [$(date +'%Y-%m-%d %H:%M:%S')]"
           fi
           git push origin HEAD:release --force
         env:
